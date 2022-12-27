@@ -7,61 +7,62 @@ while True:
     with open("words.txt", encoding = "utf-8") as all_words:
         word = random.choice(all_words.readlines()).rstrip()
 
-    secret_word = []
+    # Fill in the word to be displayed with underscores
+    # in place of letters, except for the hyphen.
+    displayed_word = ['_' if letter != '-' else letter for letter in word]
 
-    for letter in word:  # Preenche a lista com "_" equivalente
-                         # a quantidade de letras da palavra.
-        secret_word.append("_")
+    wrong_guesses = []  # Store the wrong letters guessed
+    mistake_count = 0
 
-    for index, letter in enumerate(word):
-        if letter == "-" or letter == " ":
-            secret_word[index] = letter
+    clear() # Clear the screen
 
-    wrong_attempts = []  # Vai armazenar as letras incorretas
-    mistakes_counter = 0  # Contador de erros
-
-    clear() # Limpa a tela
-
-    while secret_word != list(word) and mistakes_counter < 6:
+    while displayed_word != list(word) and mistake_count < 6:
         print("\t", end = "")
-        print(*wrong_attempts, sep = " - ") # Imprime as letras incorretas separadas por "-"
-        mistakes(mistakes_counter) # Chama a função que imprime a forca
+        print(*wrong_guesses, sep = " - ") # Display the wrong letters guessed
+        mistakes(mistake_count) # Print the updated hangman
         print("\t", end = "")
-        print(*secret_word)  # Imprime os itens da lista separados por um espaço
-        attempt = input("\n\tDigite uma letra e pressione <Enter>: ").lower()
-        while len(attempt) != 1:  # Controle de erro
-            print("\n\tAviso: Somente uma letra por vez!\n")
-            attempt = input("\tDigite uma letra e pressione <Enter>: ")
-        while attempt != unidecode(attempt):  # Controle de erro
-            print("\n\tAviso: Não inclua acentos!\n")
-            attempt = input("\tDigite uma letra e pressione <Enter>: ")
+        # Display the correct guesses in the correct place in the word
+        print(*displayed_word) 
+        
+        guess = input("\n\tType a letter and press <Enter>: ").lower()
 
-        if attempt in secret_word:
-            print("\n\tLetra já incluída. Tente outras.")
-        elif attempt in unidecode(word):
-            for index, letter in enumerate(word):  # Percorre cada letra da palavra
-                if unidecode(letter) == attempt:  # Se a letra atual for igual à tentativa do usuário,
-                    secret_word[index] = letter   # a letra entra na lista nas posições corretas.
-                    
+        # Error control
+        while (
+            not guess.isalpha() and
+            len(guess) != 1 and
+            guess != unidecode(guess)
+        ):
+            print("\n\twarning: Invalid guess!")
+            print("\tDo not use more the one letter at a time.")
+            print("\tDo not use accents.\n")
+            guess = input("\tType a letter and press <Enter>: ")
+
+        if guess in displayed_word:
+            print("\n\tLetter already included. Make another guess.")
+        elif guess in unidecode(word):
+            for i, letter in enumerate(word):  # Search for the guess in the word
+                if unidecode(letter) == guess:  # If the guess is correct,
+                    # the letter is included in the list in the correct position
+                    displayed_word[i] = letter
             print("\n\tTentativa correta!")
-        elif attempt in wrong_attempts:  # Se a letra já foi digitada, o contador de erros recebe incremento
+        elif guess in wrong_guesses:  # Se a letra já foi digitada, o contador de erros recebe incremento
             print("\tVocê já tentou essa letra antes.")
-            mistakes_counter += 1
+            mistake_count += 1
         else:  # Se a letra for diferente, o contador de erros recebe incremento.
-            mistakes_counter += 1
-            wrong_attempts.append(attempt) # Coloca as letras incorretas na lista
+            mistake_count += 1
+            wrong_guesses.append(guess) # Coloca as letras incorretas na lista
             print("\n\tTentativa incorreta.")
 
         sleep(1)
         clear()
 
-    mistakes(mistakes_counter)
+    mistakes(mistake_count)
     print("\t", end = "")
-    print(*secret_word)
+    print(*displayed_word)
 
-    if mistakes_counter < 6:
+    if mistake_count < 6:
         clear()
-        win(mistakes_counter)
+        win(mistake_count)
     else:
         print("\n\tA palavra era '" + word + "'.\n")
     sleep(2)
