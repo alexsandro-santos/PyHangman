@@ -6,6 +6,12 @@ from hangman_funcs import clear, mistakes, win
 while True:
     with open("words.txt", encoding = "utf-8") as all_words:
         word = random.choice(all_words.readlines()).rstrip()
+    with open('words.txt', encoding = "utf-8") as f:
+        words = f.read().splitlines()
+
+    word_number = len(words)
+    word = random.choice(words)
+    words.remove(word)
 
     # Fill in the word to be displayed with underscores
     # in place of letters, except for the hyphen.
@@ -15,6 +21,8 @@ while True:
     mistake_count = 0
 
     clear() # Clear the screen
+
+    print(f"{len(words)} more words available to play.")
 
     while displayed_word != list(word) and mistake_count < 6:
         print("\t", end = "")
