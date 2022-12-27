@@ -11,7 +11,7 @@ while True:
     # in place of letters, except for the hyphen.
     displayed_word = ['_' if letter != '-' else letter for letter in word]
 
-    wrong_guesses = []  # Store the wrong letters guessed
+    wrong_guesses = []  # It stores the incorrect guesses
     mistake_count = 0
 
     clear() # Clear the screen
@@ -28,12 +28,12 @@ while True:
 
         # Error control
         while (
-            not guess.isalpha() and
-            len(guess) != 1 and
+            not guess.isalpha() or
+            len(guess) != 1 or
             guess != unidecode(guess)
         ):
             print("\n\twarning: Invalid guess!")
-            print("\tDo not use more the one letter at a time.")
+            print("\tDo not use more than one letter at a time.")
             print("\tDo not use accents.\n")
             guess = input("\tType a letter and press <Enter>: ")
 
@@ -42,16 +42,16 @@ while True:
         elif guess in unidecode(word):
             for i, letter in enumerate(word):  # Search for the guess in the word
                 if unidecode(letter) == guess:  # If the guess is correct,
-                    # the letter is included in the list in the correct position
+                    # include the letter in the list in the appropriate position
                     displayed_word[i] = letter
-            print("\n\tTentativa correta!")
-        elif guess in wrong_guesses:  # Se a letra já foi digitada, o contador de erros recebe incremento
-            print("\tVocê já tentou essa letra antes.")
+            print("\n\tCorrect guess!")
+        elif guess in wrong_guesses:  # Increment the mistake counter
+            print("\tYou've tried that letter before.")
             mistake_count += 1
-        else:  # Se a letra for diferente, o contador de erros recebe incremento.
+        else:  # Increment the mistake counter
             mistake_count += 1
-            wrong_guesses.append(guess) # Coloca as letras incorretas na lista
-            print("\n\tTentativa incorreta.")
+            wrong_guesses.append(guess)  # Store the incorrect guess
+            print("\n\tIncorrect guess.")
 
         sleep(1)
         clear()
@@ -64,20 +64,20 @@ while True:
         clear()
         win(mistake_count)
     else:
-        print("\n\tA palavra era '" + word + "'.\n")
+        print("\n\tThe word was '" + word + "'.\n")
     sleep(2)
     clear()
 
     while True:
-        print ("\tDeseja continuar jogando? Digite <S> ou <N> e tecle <Enter>.")
+        print ("\tWould you like to keep playing? Type <Y> or <N> and press <Enter>.")
         print("\t", end = "")
         r = input().lower()
-        if r == "s" or r == "n":
+        if r in ("s", "y", "n"):
             break
         else:
-            print("\tOpção inválida.")
+            print("\tWarning: Invalid option.")
     
-    if r == "s":
+    if r in ("y", "s"):
         continue
     else:
         break
