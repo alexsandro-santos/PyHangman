@@ -97,3 +97,4 @@ def win(mistakes_so_far: int):
     | Você venceu |
     \\=============/''', end = "")
     mistakes(mistakes_so_far)
+    
