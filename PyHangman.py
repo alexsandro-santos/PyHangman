@@ -3,11 +3,10 @@ from time import sleep
 from unidecode import unidecode
 from hangman_funcs import clear, mistakes, win
 
-while True:
-    with open("words.txt", encoding = "utf-8") as all_words:
-        word = random.choice(all_words.readlines()).rstrip()
-    with open('words.txt', encoding = "utf-8") as f:
+with open('words.txt', encoding = "utf-8") as f:
         words = f.read().splitlines()
+
+while True:
 
     word_number = len(words)
     word = random.choice(words)
