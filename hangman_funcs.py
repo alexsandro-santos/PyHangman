@@ -1,99 +1,40 @@
 import os
 
 def clear():
-
-    "Limpa o terminal."
+    """
+    Clear the terminal.
+    """
 
     os.system('cls' if os.name=='nt' else 'clear')
 
-def mistakes(mistakes_number: int):
-
-    "Mostra como está a forca conforme cada erro."
-
-    if mistakes_number == 0:
-        print('''
-    ______
-    |   _|_
-    |
-    |
-    |
-    |
-    |
-    |''')
-
-    elif mistakes_number == 1:
-        print('''
-    ______
-    |   _|_
-    |    O
-    |
-    |
-    |
-    |
-    |''')
-
-    elif mistakes_number == 2:
-        print('''
-    ______
-    |   _|_
-    |    O
-    |    |
-    |
-    |
-    |
-    |''')
+def draw_hangman(mistakes : int):
+    """
+    Draw the hangman according to the number of mistakes.
+    """    
     
-    elif mistakes_number == 3:
-        print('''
-    ______
-    |   _|_
-    |    O
-    |   /|
-    |
-    |
-    |
-    |''')
+    with open('content/base_drawing.txt') as file:
+        drawing = file.read()
 
-    elif mistakes_number == 4:
-        print('''
-    ______
-    |   _|_
-    |    O
-    |   /|\\
-    |
-    |
-    |
-    |''')
+    body_parts = {
+        '1':'0',
+        '2':'|',
+        '3':'/',
+        '4':'\\',
+        '5':'/',
+        '6':'\\'
+    }
 
-    elif mistakes_number == 5:
-        print('''
-    ______
-    |   _|_
-    |    O
-    |   /|\\
-    |   /
-    |
-    |
-    |''')
+    for key, symbol in body_parts.items():
+        if int(key) <= mistakes:
+            drawing = drawing.replace(key, symbol)
+        else:
+            drawing = drawing.replace(key, ' ')
 
-    elif mistakes_number == 6:
-        print('''    /=============\\
-    | Você perdeu |
-    \\=============/
-    ______
-    |   _|_
-    |    O
-    |   /|\\
-    |   / \\
-    |
-    |
-    |''')
+    print(drawing)
 
-def win(mistakes_so_far: int):
-
-    "Mostra como estava a forca quando o usuário venceu."
-
-    print('''    /=============\\
-    | Você venceu |
-    \\=============/''', end = "")
-    mistakes(mistakes_so_far)
+def display(displayed_word: list, wrong_guesses: list, mistakes: int, message: str = ''):
+    print("\t", end = "")
+    print(*wrong_guesses, sep = " - ")
+    draw_hangman(mistakes)
+    print(*displayed_word)
+    print(message)
