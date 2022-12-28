@@ -2,7 +2,7 @@ import random
 from time import sleep
 from unidecode import unidecode
 from pathlib import Path
-from hangman_funcs import clear, display
+from hangman_funcs import clear, display, get_messages
 
 word_lang = {
     "1" : "pt",
@@ -19,30 +19,7 @@ while lang_choice not in ("1", "2"):
 
 path = Path(f"content/{word_lang[lang_choice]}")
 
-with open(path / "game_text.txt", encoding = "utf-8") as file:
-    in_category = False
-    in_message = False
-    messages = dict()
-    
-    for line in file:
-        if not in_category:
-            if line.strip() == "":
-                continue
-            else:
-                category = line.strip('{}\n')
-                messages[category] = dict()
-                in_category = True
-        elif in_category:
-            if line.strip('{}\n') == category:
-                in_category = False
-            elif not in_message:
-                msg_key = line.strip('[]\n')
-                messages[category.strip('{}\n')][msg_key] = str()
-                in_message = True
-            elif in_message and line.strip('[]\n') == msg_key:
-                in_message = False
-            elif in_message:
-                messages[category.strip('{}\n')][msg_key.strip('[]\n')] += line
+messages = get_messages(path)
 
 with open(path / "words.txt", encoding = "utf-8") as f:
     words = f.read().splitlines()
