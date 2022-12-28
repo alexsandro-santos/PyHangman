@@ -3,38 +3,38 @@
  palavras restantes para você jogar.
 [word_count]
 [letter_repeated]
-Letra já incluída. Faça outra tentativa.
+        Letra já incluída. Faça outra tentativa.
 [letter_repeated]
 [mistake_repeated]
-Você já tentou essa letra antes.
+        Você já tentou essa letra antes.
 [mistake_repeated]
 [correct_guess]
-Tentativa correta!
+        Tentativa correta!
 [correct_guess]
 [incorrect_guess]
-Tentativa incorreta!
+        Tentativa incorreta!
 [incorrect_guess]
 [show_word]
-A palavra era 
+        A palavra era 
 [show_word]
 {messages}
 
 {requests}
 [guess]
-Digite uma letra e pressione <Enter>: 
+        Digite uma letra e pressione <Enter>: 
 [guess]
 [play_again]
-Você gostaria de continuar jogando? Digite <S> ou <N> e pressione <Enter>.
+        Você gostaria de continuar jogando? Digite <S> ou <N> e pressione <Enter>.
 [play_again]
 {requests}
 
 {warnings}
 [invalid_guess]
-Aviso: Tentativa inválida!
-Não use mais do que uma letra por vez.
-Não use acentos.
+        Aviso: Tentativa inválida!
+        Não use mais do que uma letra por vez.
+        Não use acentos.
 [invalid_guess]
 [invalid_option]
-Aviso: Opção inválida.
+        Aviso: Opção inválida.
 [invalid_option]
 {warnings}

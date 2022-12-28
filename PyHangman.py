@@ -5,21 +5,46 @@ from pathlib import Path
 from hangman_funcs import clear, mistakes, win
 
 word_lang = {
-    '1' : 'pt',
-    '2' : 'en'
+    "1" : "pt",
+    "2" : "en"
     }
 
-print('\tPyHangman\n\nChoose the language:')
-print('1 - Português\n2 - English')
-lang_choice = input('Type <1> or <2> and press <Enter>: ')
-while lang_choice not in ('1', '2'):
-    print("\tWarning: Invalid option.")
-    lang_choice = input('Choose the language: ')
+print("\tPyHangman\n\nChoose the language:")
+print("1 - Português\n2 - English")
+lang_choice = input("Type <1> or <2> and press <Enter>: ")
+while lang_choice not in ("1", "2"):
+    print("Warning: Invalid option.")
+    lang_choice = input("Choose the language: ")
 
-path = Path(f'content/{word_lang[lang_choice]}')
+path = Path(f"content/{word_lang[lang_choice]}")
 
-with open(path / 'words.txt', encoding = "utf-8") as f:
-        words = f.read().splitlines()
+with open(path / "game_text.txt", encoding = "utf-8") as file:
+    in_category = False
+    in_message = False
+    messages = dict()
+    
+    for line in file:
+        if not in_category:
+            if line.strip() == "":
+                continue
+            else:
+                category = line.strip('{}\n')
+                messages[category] = dict()
+                in_category = True
+        elif in_category:
+            if line.strip('{}\n') == category:
+                in_category = False
+            elif not in_message:
+                msg_key = line.strip('[]\n')
+                messages[category.strip('{}\n')][msg_key] = str()
+                in_message = True
+            elif in_message and line.strip('[]\n') == msg_key:
+                in_message = False
+            elif in_message:
+                messages[category.strip('{}\n')][msg_key.strip('[]\n')] += line
+
+with open(path / "words.txt", encoding = "utf-8") as f:
+    words = f.read().splitlines()
 
 while True:
 
@@ -36,7 +61,7 @@ while True:
 
     clear() # Clear the screen
 
-    print(f"{len(words)} more words available to play.")
+    print(f"{len(words)}{messages['messages']['word_count']}")
 
     while displayed_word != list(word) and mistake_count < 6:
         print("\t", end = "")
@@ -46,7 +71,7 @@ while True:
         # Display the correct guesses in the correct place in the word
         print(*displayed_word) 
         
-        guess = input("\n\tType a letter and press <Enter>: ").lower()
+        guess = input(f"\n{messages['requests']['guess']}".rstrip('\n')).lower()
 
         # Error control
         while (
@@ -54,26 +79,24 @@ while True:
             len(guess) != 1 or
             guess != unidecode(guess)
         ):
-            print("\n\twarning: Invalid guess!")
-            print("\tDo not use more than one letter at a time.")
-            print("\tDo not use accents.\n")
-            guess = input("\tType a letter and press <Enter>: ")
+            print(f"\n{messages['warnings']['invalid_guess']}")
+            guess = input(f"{messages['requests']['guess']}")
 
         if guess in displayed_word:
-            print("\n\tLetter already included. Make another guess.")
+            print(f"\n{messages['messages']['letter_repeated']}")
         elif guess in unidecode(word):
             for i, letter in enumerate(word):  # Search for the guess in the word
                 if unidecode(letter) == guess:  # If the guess is correct,
                     # include the letter in the list in the appropriate position
                     displayed_word[i] = letter
-            print("\n\tCorrect guess!")
+            print(f"\n{messages['messages']['correct_guess']}")
         elif guess in wrong_guesses:  # Increment the mistake counter
-            print("\tYou've tried that letter before.")
+            print(f"{messages['messages']['mistake_repeated']}")
             mistake_count += 1
         else:  # Increment the mistake counter
             mistake_count += 1
             wrong_guesses.append(guess)  # Store the incorrect guess
-            print("\n\tIncorrect guess.")
+            print(f"\n{messages['messages']['incorrect_guess']}")
 
         sleep(1)
         clear()
@@ -86,18 +109,18 @@ while True:
         clear()
         win(mistake_count)
     else:
-        print("\n\tThe word was '" + word + "'.\n")
+        print(f"\n{messages['messages']['show_word']}'{word}'.\n")
     sleep(2)
     clear()
 
     while True:
-        print ("\tWould you like to keep playing? Type <Y> or <N> and press <Enter>.")
+        print (f"{messages['requests']['play_again']}")
         print("\t", end = "")
         r = input().lower()
         if r in ("s", "y", "n"):
             break
         else:
-            print("\tWarning: Invalid option.")
+            print(f"{messages['warnings']['invalid_option']}")
     
     if r in ("y", "s"):
         continue

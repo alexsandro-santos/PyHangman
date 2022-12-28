@@ -1,40 +1,40 @@
 {messages}
 [word_count]
- more words available to play.
+        more words available to play.
 [word_count]
 [letter_repeated]
-Letter already included. Make another guess.
+        Letter already included. Make another guess.
 [letter_repeated]
 [mistake_repeated]
-You've tried that letter before.
+        You've tried that letter before.
 [mistake_repeated]
 [correct_guess]
-Correct guess!
+        Correct guess!
 [correct_guess]
 [incorrect_guess]
-Incorrect guess.
+        Incorrect guess.
 [incorrect_guess]
 [show_word]
-The word was 
+        The word was 
 [show_word]
 {messages}
 
 {requests}
 [guess]
-Type a letter and press <Enter>: 
+        Type a letter and press <Enter>: 
 [guess]
 [play_again]
-Would you like to keep playing? Type <Y> or <N> and press <Enter>.
+        Would you like to keep playing? Type <Y> or <N> and press <Enter>.
 [play_again]
 {requests}
 
 {warnings}
 [invalid_guess]
-Warning: Invalid guess!
-Do not use more than one letter at a time.
-Do not use accents.
+        Warning: Invalid guess!
+        Do not use more than one letter at a time.
+        Do not use accents.
 [invalid_guess]
 [invalid_option]
-Warning: Invalid option.
+        Warning: Invalid option.
 [invalid_option]
 {warnings}
