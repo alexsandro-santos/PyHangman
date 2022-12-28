@@ -32,9 +32,10 @@ def draw_hangman(mistakes : int):
 
     print(drawing)
 
-def display(displayed_word: list, wrong_guesses: list, mistakes: int, message: str = ''):
+def display(displayed_word: list, wrong_guesses: list, mistakes: int, *messages):
     print("\t", end = "")
     print(*wrong_guesses, sep = " - ")
     draw_hangman(mistakes)
     print(*displayed_word)
-    print(message)
+    for message in messages:
+        print(message)
