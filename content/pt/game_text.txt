@@ -1,6 +1,6 @@
 {messages}
 [word_count]
- palavras restantes para você jogar
+ palavras restantes para você jogar.
 [word_count]
 [letter_repeated]
 Letra já incluída. Faça outra tentativa.
@@ -21,7 +21,7 @@ A palavra era
 
 {requests}
 [guess]
-Digite uma letra e pressione <Enter>
+Digite uma letra e pressione <Enter>: 
 [guess]
 [play_again]
 Você gostaria de continuar jogando? Digite <S> ou <N> e pressione <Enter>.
