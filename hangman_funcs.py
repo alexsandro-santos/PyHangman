@@ -36,6 +36,7 @@ def display(displayed_word: list, wrong_guesses: list, mistakes: int, *messages)
     print("\t", end = "")
     print(*wrong_guesses, sep = " - ")
     draw_hangman(mistakes)
+    print("\t", end = "")
     print(*displayed_word)
     for message in messages:
         print(message)
