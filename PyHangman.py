@@ -1,9 +1,24 @@
 import random
 from time import sleep
 from unidecode import unidecode
+from pathlib import Path
 from hangman_funcs import clear, mistakes, win
 
-with open('words.txt', encoding = "utf-8") as f:
+word_lang = {
+    '1' : 'pt',
+    '2' : 'en'
+    }
+
+print('\tPyHangman\n\nChoose the language:')
+print('1 - Português\n2 - English')
+lang_choice = input('Type <1> or <2> and press <Enter>: ')
+while lang_choice not in ('1', '2'):
+    print("\tWarning: Invalid option.")
+    lang_choice = input('Choose the language: ')
+
+path = Path(f'content/{word_lang[lang_choice]}')
+
+with open(path / 'words.txt', encoding = "utf-8") as f:
         words = f.read().splitlines()
 
 while True:
