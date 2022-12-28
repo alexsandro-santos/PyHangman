@@ -2,13 +2,14 @@ import random
 from time import sleep
 from unidecode import unidecode
 from pathlib import Path
-from hangman_funcs import clear, mistakes, win
+from hangman_funcs import clear, display
 
 word_lang = {
     "1" : "pt",
     "2" : "en"
     }
 
+clear()
 print("\tPyHangman\n\nChoose the language:")
 print("1 - Português\n2 - English")
 lang_choice = input("Type <1> or <2> and press <Enter>: ")
@@ -61,15 +62,9 @@ while True:
 
     clear() # Clear the screen
 
-    print(f"{len(words)}{messages['messages']['word_count']}")
-
     while displayed_word != list(word) and mistake_count < 6:
-        print("\t", end = "")
-        print(*wrong_guesses, sep = " - ") # Display the wrong letters guessed
-        mistakes(mistake_count) # Print the updated hangman
-        print("\t", end = "")
-        # Display the correct guesses in the correct place in the word
-        print(*displayed_word) 
+        print(f"{len(words)}{messages['messages']['word_count']}")
+        display(displayed_word, wrong_guesses, mistake_count)
         
         guess = input(f"\n{messages['requests']['guess']}".rstrip('\n')).lower()
 
@@ -80,7 +75,7 @@ while True:
             guess != unidecode(guess)
         ):
             print(f"\n{messages['warnings']['invalid_guess']}")
-            guess = input(f"{messages['requests']['guess']}")
+            guess = input(f"\n{messages['requests']['guess']}".rstrip('\n')).lower()
 
         if guess in displayed_word:
             print(f"\n{messages['messages']['letter_repeated']}")
@@ -101,15 +96,18 @@ while True:
         sleep(1)
         clear()
 
-    mistakes(mistake_count)
-    print("\t", end = "")
-    print(*displayed_word)
-
+    # Check if the user won or lost
     if mistake_count < 6:
-        clear()
-        win(mistake_count)
+        display(displayed_word, wrong_guesses, mistake_count, messages['messages']['won'])
     else:
-        print(f"\n{messages['messages']['show_word']}'{word}'.\n")
+        display(
+            displayed_word,
+            wrong_guesses,
+            mistake_count,
+            messages['messages']['lost'],
+            messages['messages']['show_word'].rstrip('\n') + word
+            )
+
     sleep(2)
     clear()
 
