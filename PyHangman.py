@@ -29,7 +29,7 @@ while True:
 
     # Fill in the word to be displayed with underscores
     # in place of letters, except for the hyphen.
-    displayed_word = ['_' if letter != '-' else letter for letter in word]
+    displayed_word = ['_' if letter.isalpha() else letter for letter in word]
 
     wrong_guesses = []  # It stores the incorrect guesses
     mistake_count = 0
