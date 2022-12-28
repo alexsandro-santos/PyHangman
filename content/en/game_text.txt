@@ -1,6 +1,6 @@
 {messages}
 [word_count]
-        more words available to play.
+ more words available to play.
 [word_count]
 [letter_repeated]
         Letter already included. Make another guess.
