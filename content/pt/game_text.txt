@@ -17,6 +17,16 @@
 [show_word]
         A palavra era 
 [show_word]
+[won]
+        /=============\
+        | Você venceu |
+        \=============/
+[won]
+[lost]
+        /=============\
+        | Você perdeu |
+        \=============/
+[lost]
 {messages}
 
 {requests}
