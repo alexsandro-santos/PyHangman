@@ -75,7 +75,12 @@ while True:
 
     # Check if the user won or lost
     if mistake_count < 6:
-        display(displayed_word, wrong_guesses, mistake_count, messages['messages']['won'])
+        display(
+            displayed_word,
+            wrong_guesses,
+            mistake_count,
+            messages['messages']['won']
+            )
     else:
         display(
             displayed_word,
